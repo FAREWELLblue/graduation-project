@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="content">
+    <h1>原始内容</h1>
+    <button onclick="func()" type="button">提交</button>
+    <script>
+        function test() {
+            $("#content").load(location.href + " #content")
+        }
+    </script>
+</div>
+</body>
+</html>

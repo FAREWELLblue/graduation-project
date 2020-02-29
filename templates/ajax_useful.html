@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--使用jquery bootstrap刷新-->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <div id="div1"></div>
+<script>
+$(document).ready(function(){
+    setInterval(function() {
+    $("#div1").load("hello");
+}, 5000);
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>主页</title>
+</head>
+<body>
+这是聊天室主页
+{% if name!='' %}
+    <h1>欢迎{{name}}来到聊天室,你的密码是：{{password}}</h1>
+{% else %}
+    <a href="login.html">登录</a>
+{% endif %}
+</body>
+</html>
