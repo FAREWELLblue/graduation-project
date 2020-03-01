@@ -58,9 +58,13 @@ class Database:
 
     # 查询单词
     def query(self):
+        sql = "flush privileges;"
+        self.cur.execute(sql)
         sql = "select record_id,content,time,username from chat_record as c,user as u where c.u_id=u.id;"
         self.cur.execute(sql)
+
         r = self.cur.fetchall() # 也有可能查不到
+        print(r)
         if r:
             return r # 将单词解释返回
         else:
