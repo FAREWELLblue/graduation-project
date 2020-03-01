@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template
-import pymysql
+from chat_db import Database
 app=Flask(__name__)
 
 def decode_recv_data(s):
@@ -10,18 +10,29 @@ def decode_recv_data(s):
         result[i.split('=')[0]]=i.split('=')[1]
     return result
 
+# 连接数据库
+db = Database()
+
+
 @app.route('/')
 def send():
     return render_template('index.html',name='')
 
-@app.route('/index',methods=['GET','POST'])
+@app.route('/login',methods=['POST'])
 def recv_name():
     recv_data=request.get_data()
     recv_data=decode_recv_data(recv_data)
-
     print(recv_data)
+    if recv_data['username']=='' or recv_data['password']=='':
+        return render_template('/login.html', message='Empty')
+    elif db.login(recv_data['username'],recv_data['password']):
+        return render_template('/index.html',name=recv_data['username'],password=recv_data['password'])
+    else:
+        return render_template('/login.html',message='Wrong')
 
-    return render_template('index.html',name=recv_data['username'],password=recv_data['password'])
+@app.route('/login',methods=['GET'])
+def refresh():
+    return render_template('/login.html', message='')
 
 @app.route('/<file>.html',methods=['GET'])
 def hello(file):
