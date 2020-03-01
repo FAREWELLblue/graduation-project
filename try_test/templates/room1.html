@@ -3,24 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <title>聊天室1</title>
+    <style>
+        div {
+            background-color: lightgrey;
+            width: 600px;
+            height: 600px;
+            overflow: auto;
+        }
+    </style>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script>
+
+        $(document).ready(function () {
+
+            setInterval(function () {
+                $("#div1").load("/chat");
+            }, 5000);
+
+            $("#bt").click(function () {
+                var message = $('#message').val();
+                $.post("/chat_message", {
+                        message: message
+                    },
+                    function (data, status) {
+                        // var info = ("数据: \n" + data + "\n状态: " + status);
+                        // alert(info)
+                        alert(data);
+
+                    });
+                $('#message').val('')
+
+            });
+        });
+
+    </script>
 </head>
+
 <body>
+{% if name!='' %}
+欢迎{{name}}
+{% else %}
+<script>window.location.href = 'login.html';</script>
+{% endif %}
+<!--    <a href="javascript:location.reload()">刷新当前页面</a>-->
+
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.min.js"></script>
-<input type="text" placeholder="0">
 <div id="div1">
     <iframe align="center" src="room_chat_record.html"></iframe>
-
 </div>
-<input type="text" placeholder="1">
-<script>
-    $(document).ready(function () {
-        setInterval(function () {
-            $("#div1").load("/chat");
-        }, 10000);
-    });
-</script>
-<input type="text" placeholder="3">
-
+<input type="text" placeholder="1" name="message" id="message">
+<button id="bt">提交</button>
 </body>
 </html>

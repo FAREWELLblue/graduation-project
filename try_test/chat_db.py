@@ -48,11 +48,11 @@ class Database:
 
     # 处理登录
     def login(self,name,passwd):
-        sql = "select username from user where username=%s and password=%s;"
+        sql = "select id from user where username=%s and password=%s;"
         self.cur.execute(sql,[name,passwd])
         r = self.cur.fetchone()
         if r:
-            return True
+            return r
         else:
             return False
 
@@ -62,19 +62,19 @@ class Database:
         self.cur.execute(sql)
         sql = "select record_id,content,time,username from chat_record as c,user as u where c.u_id=u.id;"
         self.cur.execute(sql)
-
         r = self.cur.fetchall() # 也有可能查不到
-        print(r)
         if r:
             return r # 将单词解释返回
         else:
             return '没有聊天记录'
 
     # 插入历史记录
-    def insert_history(self,name,word):
-        sql = "insert into hist (name,word) values (%s,%s);"
+    def insert_chat_record(self,u_id,chat_record):
+        sql = "insert into chat_record (u_id, content) values (%s, '%s');"%(u_id,chat_record)
+        print(sql)
         try:
-            self.cur.execute(sql,[name,word])
+            self.cur.execute(sql)
             self.db.commit()
-        except:
+        except Exception as e:
+            print(e)
             self.db.rollback()

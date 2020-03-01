@@ -26,3 +26,6 @@ select * from chat_record;
 select * from user;
 
 select record_id,content,time,username from chat_record as c,user as u where c.u_id=u.id;
+
+
+insert into chat_record (u_id, content) values (2, 'asd');

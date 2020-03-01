@@ -3,19 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("button").click(function () {
+
+                $.post("/new", {
+                        name: "  ",
+                        url: "http://www.runoob.com"
+                    },
+                    function (data, status) {
+                        alert("数据: \n" + data + "\n状态: " + status);
+                    });
+            });
+        });
+
+    </script>
+
 </head>
 <body>
-<div id="myDiv"><h2>Let AJAX change this text</h2></div>
-<button id="b01" type="button">Change Content</button>
+<input type="text">
+<button id="b01" type="button">Submit</button>
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        $("#b01").click(function () {
-            htmlobj = $.ajax({url: "/jquery/test1.txt", async: false});
-            $("#myDiv").html(htmlobj.responseText);
-        });
-    });
 
-</script>
 </body>
 </html>

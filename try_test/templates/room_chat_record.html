@@ -5,6 +5,11 @@
     <title>聊天内容</title>
 </head>
 <body>
-{{chat_record}}
+{% for item in chat_record %}
+<li>
+    {{item[3]}}:{{item[1]}}
+</li>
+    时间：{{item[2]}}
+{% endfor %}
 </body>
 </html>

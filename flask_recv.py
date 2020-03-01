@@ -11,20 +11,17 @@ def decode_recv_data(s):
 
 @app.route('/')
 def send():
-    return render_template('ajax_useful.html')
+    return render_template('ajax_.html')
 
-@app.route('/new',methods=['POST'])
+@app.route('/new',methods=['GET','POST'])
 def recv_name():
-    recv_data=request.get_data()
-    recv_data=decode_recv_data(recv_data)
 
-    print(recv_data)
+    print('1'+request.get_data().decode())
+    # print('2'+request.form.get().decode())
 
-    return render_template('hello.html',name=recv_data['username'])
 
-@app.route('/hello',methods=['GET'])
-def hello():
     return render_template('hello.html')
+
 
 
 if __name__ == '__main__':
