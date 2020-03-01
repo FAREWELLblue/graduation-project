@@ -34,10 +34,27 @@ def recv_name():
 def refresh():
     return render_template('/login.html', message='')
 
+@app.route('/chat',methods=['GET','POST'])
+def chat_room_record():
+    chat_record=db.query()
+    print(chat_record)
+    return render_template('/room_chat_record.html',chat_record=chat_record)
+
+@app.route('/register',methods=['GET','POST'])
+def register():
+    register_data=decode_recv_data(request.get_data())
+    print(register_data)
+    if register_data['username'] == '' or register_data['password'] == '':
+        return render_template('/register.html', message='Empty')
+    elif db.register(register_data['username'], register_data['password']):
+        return render_template('/login.html', message=' ')
+    else:
+        return render_template('/register.html', message='Wrong')
+
+
 @app.route('/<file>.html',methods=['GET'])
 def hello(file):
     return render_template(file+'.html')
-
 
 
 if __name__ == '__main__':

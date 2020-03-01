@@ -30,7 +30,7 @@ class Database:
     # 帮 server 处理注册 成功 True 失败返回 False
     def register(self,name,passwd):
         # 判断这个姓名的用户是否存在
-        sql = "select name from user where name=%s;"
+        sql = "select username from user where username=%s;"
         self.cur.execute(sql,[name])
         r = self.cur.fetchone() # 如果查询到了说明该用户已经存在
         if r:
@@ -38,7 +38,7 @@ class Database:
         else:
             # 插入数据库
             try:
-                sql = "insert into user (name,passwd) values (%s,%s);"
+                sql = "insert into user (username,password) values (%s,%s);"
                 self.cur.execute(sql,[name,passwd])
                 self.db.commit()
                 return True
@@ -57,15 +57,14 @@ class Database:
             return False
 
     # 查询单词
-    def query(self,word):
-        sql = "select mean from words where word=%s;"
-        self.cur.execute(sql,[word])
-        r = self.cur.fetchone() # 也有可能查不到
-
+    def query(self):
+        sql = "select record_id,content,time,username from chat_record as c,user as u where c.u_id=u.id;"
+        self.cur.execute(sql)
+        r = self.cur.fetchall() # 也有可能查不到
         if r:
-            return r[0] # 将单词解释返回
+            return r # 将单词解释返回
         else:
-            return "没有找到该单词"
+            return '没有聊天记录'
 
     # 插入历史记录
     def insert_history(self,name,word):
